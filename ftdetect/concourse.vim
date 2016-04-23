@@ -19,7 +19,7 @@ fun! s:SelectConcourse()
   endif
 
   let fp = expand("<afile>:p")
-  let concourseRegex = '^(groups|resources|jobs):'
+  let concourseRegex = '^(resources|jobs):'
   let concourseKeyCount = system('cat ' . fp . ' | ' . grep . ' "' . concourseRegex . '" | wc -l')
 
   if concourseKeyCount =~# '3'
