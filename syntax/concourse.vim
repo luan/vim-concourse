@@ -60,7 +60,7 @@ if has('nvim')
       syntax match concourseName /\v(name: )@<=.*/
 endif
 
-syntax region concoursePrimitive start=/\v^-/ skip=/\v\\./ excludenl end=/\v\ze\n?^-/
+syntax region concoursePrimitive start=/\v^\z(\s*)-/ skip=/\v\\./ excludenl end=/\v\ze\n?^\z1-/
                   \ contained
                   \ contains=ALL
                   \ fold transparent
