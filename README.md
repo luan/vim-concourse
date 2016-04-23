@@ -24,7 +24,7 @@ let g:concourse_tags_autosave = 0
 
 ## Credits
 
-* [vim-go](https://github.com/fatih/vim-go), where form a lot of the plugin code was based
+* [vim-go](https://github.com/fatih/vim-go), where from a lot of the plugin code was based
 * [concourse](http://concourse.ci), the concourse ci system
 
 ## License
