@@ -22,7 +22,7 @@ fun! s:SelectConcourse()
   let concourseRegex = '^(resources|jobs):'
   let concourseKeyCount = system('cat ' . fp . ' | ' . grep . ' "' . concourseRegex . '" | wc -l')
 
-  if concourseKeyCount =~# '3'
+  if concourseKeyCount =~# '2'
     execute 'set filetype=concourse'
   else
   endif
