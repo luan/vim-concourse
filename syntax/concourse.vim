@@ -15,7 +15,7 @@ syntax match yamlDelimiter /\v(^[^:]*)@<=:/
 syntax match yamlDelimiter /\v^\s*- /
 syntax match yamlConstant /\v( |\{ ?)@<=\~\ze( ?\}|, |$)/
 
-syntax region yamlComment start="\#" end="$"
+syntax region yamlComment start="\v(^| )\#" end="$"
 syntax match yamlIndicator "#YAML:\S\+"
 
 syntax region yamlString start="'" end="'" skip="\\'"
