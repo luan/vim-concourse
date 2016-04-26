@@ -43,10 +43,10 @@ let groupOptions        = ['name', 'jobs', 'resources']
 let concourseOptions    = resourceOptions + resourceTypeOptions + jobOptions + groupOptions
 
 let stepTypes           = ['get', 'put', 'task']
-let stepGroups          = ['aggregate', 'do', 'on_success', 'on_failure', 'ensure', 'try']
-let stepOptions         = ['tags', 'timeout', 'attempts']
-let stepOptions        += ['resource', 'trigger', 'passed', 'params', 'file',
-                          \ 'config', 'privileged', 'input_mapping', 'output_mapping']
+let stepGroups          = ['aggregate', 'timeout', 'do', 'on_success', 'on_failure', 'ensure', 'try']
+let stepOptions         = ['tags', 'attempts', 'resource', 'trigger', 'passed',
+                          \ 'get_params', 'params', 'file', 'config',
+                          \ 'privileged', 'input_mapping', 'output_mapping']
 
 let stepKeys            = stepTypes + stepGroups + stepOptions
 
