@@ -32,7 +32,7 @@ syntax keyword yamlConstant NULL Null null NONE None none NIL Nil nil
 syntax keyword yamlConstant TRUE True true YES Yes yes ON On on
 syntax keyword yamlConstant FALSE False false NO No no OFF Off off
 
-syntax match yamlKey "\w\+\ze\s*:"
+syntax match yamlKey /\v(, ?|\{ ?|^\s*-?\s*)@<=\w+\ze:/
 syntax match yamlAnchor /\v(: )@<=\&\S+/
 syntax match yamlAlias  /\v(: )@<=\*\S+/
 
