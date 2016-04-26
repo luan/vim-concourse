@@ -13,6 +13,7 @@ syntax match yamlBlock "[\[\]\{\}\|\>]"
 syntax match yamlOperator "[?^+-]\|=>"
 syntax match yamlDelimiter /\v(^[^:]*)@<=:/
 syntax match yamlDelimiter /\v^\s*- /
+syntax match yamlConstant /\v( |\{ ?)@<=\~\ze( ?\}|, |$)/
 
 syntax region yamlComment start="\#" end="$"
 syntax match yamlIndicator "#YAML:\S\+"
