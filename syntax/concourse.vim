@@ -35,9 +35,11 @@ syntax keyword yamlConstant TRUE True true YES Yes yes ON On on
 syntax keyword yamlConstant FALSE False false NO No no OFF Off off
 syntax match yamlConstant /\v( |\{ ?)@<=\~\ze( ?\}|, |$)/
 
-syntax match yamlKey /\v(, ?|\{ ?|^\s*-?\s*)@<=\w+\ze:/
+syntax match yamlKey    /\v\w+\ze:( |$)/
 syntax match yamlAnchor /\v(: )@<=\&\S+/
 syntax match yamlAlias  /\v(: )@<=\*\S+/
+
+let primitives          = ['groups', 'jobs', 'resources', 'resource_types']
 
 let resourceOptions     = ['name', 'type', 'source', 'check_every']
 let resourceTypeOptions = ['name', 'type', 'source']
@@ -48,20 +50,20 @@ let concourseOptions    = resourceOptions + resourceTypeOptions + jobOptions + g
 let stepTypes           = ['get', 'put', 'task']
 let stepGroups          = ['aggregate', 'timeout', 'do', 'on_success', 'on_failure', 'ensure', 'try']
 let stepOptions         = ['tags', 'attempts', 'resource', 'trigger', 'passed',
-                          \ 'get_params', 'params', 'file', 'config',
-                          \ 'privileged', 'input_mapping', 'output_mapping']
+                          \ 'file', 'privileged', 'input_mapping', 'output_mapping']
+let stepOptionRegions   = ['get_params', 'params', 'config']
 
-let stepKeys            = stepTypes + stepGroups + stepOptions
+let stepKeys            = stepTypes + stepGroups + stepOptions + stepOptionRegions
 
-let concoursePrimitivesRegex = '\v\ze\n?^(jobs|resources|groups|resource_types):'
+let primitivesRegex = join(primitives, "|")
 
-execute 'syntax region concourseGroups        matchgroup=concourseRootKey start=/\v^groups\ze:/         skip=/\v\\./ end=/' . concoursePrimitivesRegex . '/   contains=yamlDelimiter,concoursePrimitive fold keepend'
-execute 'syntax region concourseJobs          matchgroup=concourseRootKey start=/\v^jobs\ze:/           skip=/\v\\./ end=/' . concoursePrimitivesRegex . '/   contains=yamlDelimiter,concoursePrimitive fold keepend'
-execute 'syntax region concourseResources     matchgroup=concourseRootKey start=/\v^resources\ze:/      skip=/\v\\./ end=/' . concoursePrimitivesRegex . '/   contains=yamlDelimiter,concoursePrimitive fold keepend'
-execute 'syntax region concourseResourceTypes matchgroup=concourseRootKey start=/\v^resource_types\ze:/ skip=/\v\\./ end=/' . concoursePrimitivesRegex . '/   contains=yamlDelimiter,concoursePrimitive fold keepend'
+syntax region concoursePrimitiveGroup matchgroup=concourseRootKey start=/\v^groups\ze:/         skip=/\v^([- ].*)?$/ excludenl end=/^/ contains=yamlDelimiter,concoursePrimitive fold keepend
+syntax region concoursePrimitiveGroup matchgroup=concourseRootKey start=/\v^jobs\ze:/           skip=/\v^([- ].*)?$/ excludenl end=/^/ contains=yamlDelimiter,concoursePrimitive fold keepend
+syntax region concoursePrimitiveGroup matchgroup=concourseRootKey start=/\v^resources\ze:/      skip=/\v^([- ].*)?$/ excludenl end=/^/ contains=yamlDelimiter,concoursePrimitive fold keepend
+syntax region concoursePrimitiveGroup matchgroup=concourseRootKey start=/\v^resource_types\ze:/ skip=/\v^([- ].*)?$/ excludenl end=/^/ contains=yamlDelimiter,concoursePrimitive fold keepend
 
 if has('nvim')
-      syntax match concourseName /\v(name: )@<=.*/
+      syntax match concourseName /\v(name: )@<=.*/ contained
 endif
 
 syntax region concoursePrimitive start=/\v^\z(\s*)-/ skip=/\v\\./ excludenl end=/\v\ze\n?^\z1-/
@@ -75,17 +77,20 @@ endfor
 
 
 let stepsRegex = join(stepTypes + stepGroups, "|")
-execute 'syntax region concourseStep start=/\v^\z(\s*)- (' . stepsRegex . ')\ze:/ skip=/^\z1 / excludenl end=/\v\ze\n?^([^ ]|\z1[^ ])/ contained contains=ALL fold transparent'
+execute 'syntax region concourseStep start=/\v^\z(\s*)- (' . stepsRegex . ')\ze:/ skip=/\v^\z1 .*$/ excludenl end=/^/ contained contains=ALL fold transparent'
 
-syntax region concoursePlan matchgroup=concourseKeywords start=/\v^\z(\s*)plan\ze:/ skip=/^\z1-/ excludenl end=/\v\ze\n?^([^ ]|\z1[^ -])/
+syntax region concoursePlan matchgroup=concourseKeywords start=/\v^\z(\s*)plan\ze:/ skip=/\v^\z1[-].*$/ excludenl end=/^/
                   \ contained
-                  \ contains=concourseStep,yamlConstant,yamlIndicator,yamlAnchor,yamlAlias,yamlKey,yamlType,yamlComment,yamlBlock,yamlOperator,yamlDelimiter,yamlString,yamlEscape
+                  \ contains=concourseOptionRegion,concourseStep,yamlConstant,yamlIndicator,yamlAnchor,yamlAlias,yamlKey,yamlType,yamlComment,yamlBlock,yamlOperator,yamlDelimiter,yamlString,yamlEscape
                   \ fold transparent
 
 for key in stepKeys
   execute 'syntax match concourseSteps /\v\s*-?\s*' . key . '\ze:/ contained'
 endfor
 
+let stepsOptionRegionsRegex = join(stepOptionRegions, "|")
+execute 'syntax region concourseOptionRegion matchgroup=concourseSteps start=/\v^\z(\s*)(' . stepsOptionRegionsRegex . ')\ze:/ skip=/\v^\z1 .*$/ end=/^/ contained contains=TOP fold transparent'
+execute 'syntax region concourseOptionRegion matchgroup=concourseSteps start=/\v^\z(\s*)(' . stepsOptionRegionsRegex . ')\ze: \{/ excludenl end=/\v\ze}/ contained contains=TOP fold transparent'
 
 " Setupt the hilighting links
 
