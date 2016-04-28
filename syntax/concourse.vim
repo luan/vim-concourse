@@ -33,11 +33,26 @@ syntax match yamlType "!\S\+"
 syntax keyword yamlConstant NULL Null null NONE None none NIL Nil nil
 syntax keyword yamlConstant TRUE True true YES Yes yes ON On on
 syntax keyword yamlConstant FALSE False false NO No no OFF Off off
-syntax match yamlConstant /\v( |\{ ?)@<=\~\ze( ?\}|, |$)/
+syntax match   yamlConstant /\v( |\{ ?)@<=\~\ze( ?\}|, |$)/
 
 syntax match yamlKey    /\v[0-9A-Za-z_-]+\ze:( |$)/
 syntax match yamlAnchor /\v(: )@<=\&\S+/
 syntax match yamlAlias  /\v(: )@<=\*\S+/
+
+hi link yamlConstant Keyword
+hi link yamlNumber Keyword
+hi link yamlIndicator PreCondit
+hi link yamlAnchor Function
+hi link yamlAlias Function
+hi link yamlKey Identifier
+hi link yamlType Type
+
+hi link yamlComment Comment
+hi link yamlBlock Operator
+hi link yamlOperator Operator
+hi link yamlDelimiter Delimiter
+hi link yamlString String
+hi link yamlEscape Special
 
 let primitives          = ['groups', 'jobs', 'resources', 'resource_types']
 
@@ -100,21 +115,4 @@ hi link concourseName Type
 hi link concourseSteps Type
 hi link concourseRootKey Keyword
 hi link concourseInterpolation String
-
 hi link concoursePlan Function
-
-hi link yamlConstant Keyword
-hi link yamlNumber Keyword
-hi link yamlIndicator PreCondit
-hi link yamlAnchor Function
-hi link yamlAlias Function
-hi link yamlKey Identifier
-hi link yamlType Type
-
-hi link yamlComment Comment
-hi link yamlBlock Operator
-hi link yamlOperator Operator
-hi link yamlDelimiter Delimiter
-hi link yamlString String
-hi link yamlEscape Special
-
