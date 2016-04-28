@@ -14,7 +14,7 @@ syntax match yamlOperator "[?^+-]\|=>"
 syntax match yamlDelimiter /\v(^[^:]*)@<=:/
 syntax match yamlDelimiter /\v^\s*- /
 
-syntax match yamlNumber /\v<[_0-9]+(\.?[_0-9]*)(e\+[_0-9]+)?>/
+syntax match yamlNumber /\v [_0-9]+(\.?[_0-9]*)(e\+[_0-9]+)?($|[, \t])/
 syntax match yamlNumber /\v(\.inf|\.NaN)/
 
 syntax region yamlComment start="\v(^| )\#" end="$"
