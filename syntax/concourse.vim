@@ -35,7 +35,7 @@ syntax keyword yamlConstant TRUE True true YES Yes yes ON On on
 syntax keyword yamlConstant FALSE False false NO No no OFF Off off
 syntax match yamlConstant /\v( |\{ ?)@<=\~\ze( ?\}|, |$)/
 
-syntax match yamlKey    /\v\w+\ze:( |$)/
+syntax match yamlKey    /\v[0-9A-Za-z_-]+\ze:( |$)/
 syntax match yamlAnchor /\v(: )@<=\&\S+/
 syntax match yamlAlias  /\v(: )@<=\*\S+/
 
