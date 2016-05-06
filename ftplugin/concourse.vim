@@ -8,6 +8,6 @@ setlocal indentexpr=
 setlocal norelativenumber nocursorline
 
 if globpath(&rtp, 'plugin/rainbow.vim') != ""
-  RainbowToggleOff
+  silent! RainbowToggleOff
 endif
 " vim:set sw=2:
