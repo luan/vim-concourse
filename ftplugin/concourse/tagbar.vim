@@ -4,16 +4,15 @@
 " Also make sure the ctags command exists
 "
 if !executable('ctags')
-	finish
+    finish
 elseif globpath(&rtp, 'plugin/tagbar.vim') == ""
-	finish
-endif
-
-if !exists("g:concourse_flytags_bin")
-	let g:concourse_flytags_bin = "flytags"
+    finish
 endif
 
 function! s:SetTagbar()
+    if !exists("g:concourse_flytags_bin")
+        let g:concourse_flytags_bin = "flytags"
+    endif
     let bin_path = concourse#CheckBinPath(g:concourse_flytags_bin)
     if empty(bin_path)
         return
