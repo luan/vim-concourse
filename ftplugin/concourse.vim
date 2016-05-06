@@ -10,4 +10,9 @@ setlocal norelativenumber nocursorline
 if globpath(&rtp, 'plugin/rainbow.vim') != ""
   silent! RainbowToggleOff
 endif
+
+if !exists("g:concourse_flytags_bin")
+    let g:concourse_flytags_bin = "flytags"
+endif
+
 " vim:set sw=2:

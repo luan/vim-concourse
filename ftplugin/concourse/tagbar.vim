@@ -10,9 +10,6 @@ elseif globpath(&rtp, 'plugin/tagbar.vim') == ""
 endif
 
 function! s:SetTagbar()
-    if !exists("g:concourse_flytags_bin")
-        let g:concourse_flytags_bin = "flytags"
-    endif
     let bin_path = concourse#CheckBinPath(g:concourse_flytags_bin)
     if empty(bin_path)
         return
