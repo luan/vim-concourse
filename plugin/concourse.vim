@@ -2,7 +2,7 @@
 if exists("g:concourse_loaded_install")
     finish
 endif
-let g:go_loaded_install = 1
+let g:concourse_loaded_install = 1
 
 
 " these packages are used by vim-concourse and can be automatically installed if
