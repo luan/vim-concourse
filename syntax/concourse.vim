@@ -65,7 +65,7 @@ let concourseOptions    = resourceOptions + resourceTypeOptions + jobOptions + g
 let stepTypes           = ['get', 'put', 'task']
 let stepGroups          = ['aggregate', 'timeout', 'do', 'on_success', 'on_failure', 'ensure', 'try']
 let stepOptions         = ['tags', 'attempts', 'resource', 'trigger', 'passed',
-                          \ 'file', 'privileged', 'input_mapping', 'output_mapping']
+                          \ 'file', 'privileged', 'input_mapping', 'output_mapping', 'version']
 let stepOptionRegions   = ['get_params', 'params', 'config']
 
 let stepKeys            = stepTypes + stepGroups + stepOptions + stepOptionRegions
