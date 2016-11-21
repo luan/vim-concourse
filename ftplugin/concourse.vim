@@ -6,6 +6,7 @@
 setlocal autoindent sw=2 ts=2 expandtab foldmethod=syntax
 setlocal indentexpr=
 setlocal norelativenumber nocursorline
+setlocal commentstring=#\ %s
 
 if globpath(&rtp, 'plugin/rainbow.vim') != ""
   silent! RainbowToggleOff
